@@ -5,8 +5,8 @@ using UnityEngine;
 public class AttacerSpawner : MonoBehaviour
 {
 
-    [SerializeField] GameObject enemyToSpown;
-    [SerializeField] bool keepSpawning = true;
+    [SerializeField] Attacker[] attackerPrefabArray;
+    bool keepSpawning = true;
     [SerializeField] float minSpownDelay = 1f;
     [SerializeField] float maxSpownDelay = 5f;
     
@@ -17,19 +17,26 @@ public class AttacerSpawner : MonoBehaviour
         while (keepSpawning)
         {
             yield return new WaitForSeconds(Random.Range(minSpownDelay, maxSpownDelay));
-            SpawnAnAnemy();
+            SpawnAttacker();
         }
     }
 
-    // Update is called once per frame
-    void Update()
+    public void StopSpawning()
     {
-        
+        keepSpawning = false;
     }
-        
-    private void SpawnAnAnemy()
+
+            
+    private void SpawnAttacker()
     {
-        Instantiate(enemyToSpown, transform.position, transform.rotation);
+        var attackerIndex = Random.Range(0, attackerPrefabArray.Length);
+        Spown(attackerPrefabArray[attackerIndex]);
+    }
+
+    private void Spown (Attacker myAttacker)
+    {
+        Attacker newAttacker = Instantiate(myAttacker, transform.position, transform.rotation) as Attacker;
+        newAttacker.transform.parent = transform; // спавнит врага как ребенока спавнера
     }
 
 }

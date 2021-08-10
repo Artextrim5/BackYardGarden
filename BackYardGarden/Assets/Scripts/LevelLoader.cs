@@ -32,6 +32,25 @@ public class LevelLoader : MonoBehaviour
         SceneManager.LoadScene(currentBuildIndex + 1);
     }
 
+    public void LoadGameScene()
+    {
+        SceneManager.LoadScene("Level 1");
+    }
+    
+    public void LoudMenu()
+    {
+        Time.timeScale = 1;
+        SceneManager.LoadScene("Start Screen");
+    }
+    
+    public void RestartScene()
+    {
+        Time.timeScale = 1;
+        SceneManager.LoadScene(currentBuildIndex);
+    }
+
+
+
     public void QuitGame()
     {
         Application.Quit();
@@ -46,6 +65,22 @@ public class LevelLoader : MonoBehaviour
     {
         yield return new WaitForSeconds(dethDelay);
         SceneManager.LoadScene(1);
+    }
+
+    public void LoadYouLose()
+    {
+        StartCoroutine(LoadLoseYou());
+    }
+
+    IEnumerator LoadLoseYou()
+    {
+        yield return new WaitForSeconds(loadDelay);
+        SceneManager.LoadScene("Lose Screen");
+    }
+
+    public void LoadOptionsScene()
+    {
+        SceneManager.LoadScene("Options");
     }
 
 }
